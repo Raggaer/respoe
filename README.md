@@ -1,6 +1,6 @@
 # Respoe
 
-Path of Exile forum client and bot
+Path of Exile forum client
 
 ## Testing
 
