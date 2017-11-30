@@ -9,7 +9,7 @@ import (
 
 // Client client used for all path of exile website applications
 type Client struct {
-	c      *http.Client
+	HTTP   *http.Client
 	Logged bool
 }
 
@@ -19,9 +19,9 @@ func New() (*Client, error) {
 	if err != nil {
 		return nil, err
 	}
-	
+
 	return &Client{
-		c: &http.Client{
+		HTTP: &http.Client{
 			Jar: jar,
 		},
 		Logged: false,
