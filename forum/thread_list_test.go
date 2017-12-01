@@ -41,4 +41,6 @@ func TestGetThreadList(t *testing.T) {
 	if threads[0].Pagination.Last < 96 {
 		t.Fatalf("Wrong last page for pagination. Expected > 96 got %d", threads[0].Pagination.Last)
 	}
+
+	t.Log(threads[0].CreatedAt)
 }

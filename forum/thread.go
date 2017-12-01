@@ -1,5 +1,7 @@
 package forum
 
+import "time"
+
 // Thread forum thread
 type Thread struct {
 	Staff      bool
@@ -10,5 +12,7 @@ type Thread struct {
 	Replies    int
 	Views      int
 	URL        string
+	Author     string
+	CreatedAt  time.Time
 	Pagination *Pagination
 }

@@ -3,6 +3,7 @@ package forum
 import (
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/raggaer/respoe/client"
@@ -76,6 +77,22 @@ func (f *Forum) GetThreadList(page int, c *client.Client) ([]*Thread, error) {
 			Current: firstPage,
 			Last:    lastPage,
 		}
+
+		// Retrieve thread author
+		postBy := thread.Children().NextFiltered("div.postBy")
+		t.Author = strings.TrimSpace(postBy.Children().First().Children().First().Text())
+
+		// Retrieve thread creation date
+		// Thread creation date starts with ', Date' so we need to remove ', '
+		threadDate := postBy.Children().Last().Text()
+		threadDate = strings.TrimSpace(strings.TrimPrefix(threadDate, ", "))
+		creationDate, err := time.Parse("Jan 02, 2006 15:04:05 PM", threadDate)
+
+		if err != nil {
+			return
+		}
+
+		t.CreatedAt = creationDate
 
 		// Retrieve views block
 		viewBlock := s.Children().NextFiltered(".views")
