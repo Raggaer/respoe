@@ -12,7 +12,8 @@ Path of Exile forum client. Useful for automating tasks on the forum such as bot
 
 - [x] List with stats
 - [x] Retrieve specific forum pagination information (first, current and last page)
-- [x] Retrieve all threads from a forum (with status, views and replies)
+- [x] Retrieve all threads from a forum (with status, views, author, creation date and replies)
+- [x] Retrieve all posts from a thread (content, author and creation date)
 
 ### Testing
 

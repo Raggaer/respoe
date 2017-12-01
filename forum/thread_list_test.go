@@ -27,9 +27,9 @@ func TestGetThreadList(t *testing.T) {
 	if threads[0].Title != "Spelling mistakes and typos" || !threads[0].Staff || !threads[0].Sticky {
 		t.Fatalf(
 			`Unexpected first thread information. 
-			Expected title 'Spelling mistakes and typos' got %s.
+			Expected title 'Spelling mistakes and typos' got '%s'.
 			Expected staff thread type got %t.
-			Expected sticky thread type got %t`,
+			Expected sticky thread type got %t.`,
 			threads[0].Title,
 			threads[0].Staff,
 			threads[0].Sticky,
@@ -41,6 +41,4 @@ func TestGetThreadList(t *testing.T) {
 	if threads[0].Pagination.Last < 96 {
 		t.Fatalf("Wrong last page for pagination. Expected > 96 got %d", threads[0].Pagination.Last)
 	}
-
-	t.Log(threads[0].CreatedAt)
 }

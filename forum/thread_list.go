@@ -11,7 +11,7 @@ import (
 
 // GetThreadList returns a list of threads for the given forum/page
 func (f *Forum) GetThreadList(page int, c *client.Client) ([]*Thread, error) {
-	resp, err := c.HTTP.Get(forumIndexURL + f.URL)
+	resp, err := c.HTTP.Get(forumIndexURL + f.URL + "/page/" + strconv.Itoa(page))
 	if err != nil {
 		return nil, err
 	}
