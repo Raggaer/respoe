@@ -57,6 +57,23 @@ func (f *Forum) GetThreadList(page int, c *client.Client) ([]*Thread, error) {
 		t.URL = threadTitleURL
 		t.Title = strings.TrimSpace(threadTitle.Text())
 
+		// Retrieve pagination information
+		pagination := thread.Children().NextFiltered("div.forum_pagination")
+		firstPage, err := strconv.Atoi(pagination.Children().First().Text())
+		if err != nil {
+			return
+		}
+		lastPage, err := strconv.Atoi(pagination.Children().Last().Text())
+		if err != nil {
+			return
+		}
+
+		t.Pagination = &Pagination{
+			First:   firstPage,
+			Current: firstPage,
+			Last:    lastPage,
+		}
+
 		// Retrieve views block
 		viewBlock := s.Children().NextFiltered(".views")
 		replies, err := strconv.Atoi(viewBlock.Children().First().ChildrenFiltered("span").Text())
