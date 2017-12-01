@@ -42,6 +42,9 @@ func (f *Forum) GetThreadList(page int, c *client.Client) ([]*Thread, error) {
 				if f.HasClass("locked") {
 					t.Locked = true
 				}
+				if f.HasClass("support") {
+					t.Support = true
+				}
 			})
 		}
 
