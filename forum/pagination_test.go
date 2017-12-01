@@ -14,7 +14,7 @@ func TestGetPagination(t *testing.T) {
 
 	// Create dummy announcements forum
 	f := &Forum{
-		URL: "/forum/view-forum/news",
+		URL: "/view-forum/news",
 	}
 
 	p, err := f.GetPagination(c)
