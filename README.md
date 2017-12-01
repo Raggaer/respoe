@@ -2,11 +2,18 @@
 
 Path of Exile forum client. Useful for automating tasks on the forum such as bots or gathering data.
 
+## Client
+
 - [x] Login
 - [x] Logout
 - [x] Change password
 
-## Testing
+## Forum
+
+- [x] List with stats
+- [x] Retrieve specific forum pagination information (first, current and last page)
+
+### Testing
 
 To run the tests you need to set some environment variables:
 
