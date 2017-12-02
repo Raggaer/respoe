@@ -23,3 +23,4 @@ To run the tests you need to set some environment variables:
 - `RESPOE_EMAIL`: Your Path of Exile account email (used for login).
 - `RESPOE_PASSWORD`: Your Path of Exile account password (used for login).
 - `RESPOE_NEW_PASSWORD`: New password for your account (used for change password).
+- `RESPOE_RECIPIENT`: Recipient for sending private messages.

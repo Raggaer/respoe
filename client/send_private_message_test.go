@@ -15,7 +15,9 @@ func TestSendPrivateMessage(t *testing.T) {
 		t.Fatalf("Unable to login: %v", err)
 	}
 
-	if err := c.SendPrivateMessage([]string{"Punckanuto"}, "Hello from Respoe", "Hi brother"); err != nil {
+	if err := c.SendPrivateMessage([]string{
+		os.Getenv("RESPOE_RECIPIENT"),
+	}, "Hello from Respoe", "Hi brother"); err != nil {
 		t.Fatalf("Unable to send private message: %v", err)
 	}
 }
