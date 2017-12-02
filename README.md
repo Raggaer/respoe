@@ -8,6 +8,7 @@ Path of Exile forum client. Useful for automating tasks on the forum such as bot
 - [x] Logout
 - [x] Change password
 - [x] Send private messages
+- [x] Retrieve special offer list
 
 ## Forum
 
