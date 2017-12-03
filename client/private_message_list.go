@@ -1,6 +1,7 @@
 package client
 
 import (
+	"errors"
 	"strconv"
 	"strings"
 	"time"
@@ -12,6 +13,10 @@ const inboxURL = "https://www.pathofexile.com/private-messages/inbox"
 
 // GetInbox returns the list of private messages
 func (c *Client) GetInbox(page int) ([]*PrivateMessage, error) {
+	if !c.Logged {
+		return nil, errors.New("You need to be logged in to change your client password")
+	}
+
 	resp, err := c.HTTP.Get(inboxURL + "/page/" + strconv.Itoa(page))
 	if err != nil {
 		return nil, err
