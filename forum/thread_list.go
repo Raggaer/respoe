@@ -7,6 +7,7 @@ import (
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/raggaer/respoe/client"
+	"github.com/raggaer/respoe/util"
 )
 
 // GetThreadList returns a list of threads for the given forum/page
@@ -72,7 +73,7 @@ func (f *Forum) GetThreadList(page int, c *client.Client) ([]*Thread, error) {
 			return
 		}
 
-		t.Pagination = &Pagination{
+		t.Pagination = &util.Pagination{
 			First:   firstPage,
 			Current: firstPage,
 			Last:    lastPage,
@@ -86,7 +87,7 @@ func (f *Forum) GetThreadList(page int, c *client.Client) ([]*Thread, error) {
 		// Thread creation date starts with ', Date' so we need to remove ', '
 		threadDate := postBy.Children().Last().Text()
 		threadDate = strings.TrimSpace(strings.TrimPrefix(threadDate, ", "))
-		creationDate, err := time.Parse("Jan 02, 2006 15:04:05 PM", threadDate)
+		creationDate, err := time.Parse("Jan 2, 2006 15:04:05 PM", threadDate)
 
 		if err != nil {
 			return

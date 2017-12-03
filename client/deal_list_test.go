@@ -15,5 +15,8 @@ func TestGetDealList(t *testing.T) {
 		t.Fatalf("Unable to retrieve deal list: %v", err)
 	}
 
-	t.Log(deals[0])
+	// We asumme there are always atleast one offer
+	if len(deals) <= 0 {
+		t.Fatal("There should be atleast one deal running")
+	}
 }

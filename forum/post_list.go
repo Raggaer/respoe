@@ -46,7 +46,7 @@ func (t *Thread) GetPostList(page int, c *client.Client) ([]*Post, error) {
 
 		// Retrieve post creation date
 		postCreatedAt, err := time.Parse(
-			"Jan 02, 2006 15:04:05 PM",
+			"Jan 2, 2006 15:04:05 PM",
 			s.Children().Last().Children().First().Children().NextFiltered("div.posted-by").Children().NextFiltered("span.post_date").Text(),
 		)
 		if err != nil {

@@ -1,24 +1,22 @@
-package forum
+package util
 
 import (
+	"net/http"
 	"strconv"
 
 	"github.com/PuerkitoBio/goquery"
-	"github.com/raggaer/respoe/client"
 )
 
-// Pagination forum pagination data
+// Pagination pagination data
 type Pagination struct {
 	Current int
 	First   int
 	Last    int
 }
 
-const forumMainURL = "https://www.pathofexile.com"
-
-// GetPagination returns the forum pagination struct
-func (f *Forum) GetPagination(c *client.Client) (*Pagination, error) {
-	resp, err := c.HTTP.Get(forumMainURL + f.URL)
+// GetPagination returns the given URL pagination div
+func GetPagination(url string, c *http.Client) (*Pagination, error) {
+	resp, err := c.Get(url)
 	if err != nil {
 		return nil, err
 	}

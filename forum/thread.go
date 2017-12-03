@@ -1,6 +1,10 @@
 package forum
 
-import "time"
+import (
+	"time"
+
+	"github.com/raggaer/respoe/util"
+)
 
 // Thread forum thread
 type Thread struct {
@@ -14,5 +18,5 @@ type Thread struct {
 	URL        string
 	Author     string
 	CreatedAt  time.Time
-	Pagination *Pagination
+	Pagination *util.Pagination
 }

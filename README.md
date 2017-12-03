@@ -7,6 +7,7 @@ Path of Exile forum client. Useful for automating tasks on the forum such as bot
 - [x] Login
 - [x] Logout
 - [x] Change password
+- [x] Retrieve inbox by page
 - [x] Send private messages
 - [x] Retrieve special offer list
 
@@ -17,7 +18,13 @@ Path of Exile forum client. Useful for automating tasks on the forum such as bot
 - [x] Retrieve all threads from a forum (with status, views, author, creation date and replies)
 - [x] Retrieve all posts from a thread (content, author and creation date)
 
-### Testing
+## Util
+
+- [x] Retrieve pagination from any valid page
+- [x] Retrieve hash value from any valid form
+- [x] Retrieve errors from a submitted form
+
+## Testing
 
 To run the tests you need to set some environment variables:
 
