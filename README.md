@@ -2,7 +2,11 @@
 
 Path of Exile forum client. Useful for automating tasks on the forum such as bots or gathering data.
 
-## Client
+## Features
+
+Below is a list of the features that are already completed:
+
+### Client
 
 - [x] Login
 - [x] Logout
@@ -11,7 +15,7 @@ Path of Exile forum client. Useful for automating tasks on the forum such as bot
 - [x] Send private messages
 - [x] Retrieve special offer list
 
-## Forum
+### Forum
 
 - [x] List with stats
 - [x] Retrieve specific forum pagination information (first, current and last page)

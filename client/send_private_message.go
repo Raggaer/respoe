@@ -21,10 +21,7 @@ func (c *Client) SendPrivateMessage(recipients []string, subject, content string
 	}
 
 	// Convert []string to valid textarea newline separated names
-	recipientList := ""
-	for _, r := range recipients {
-		recipientList += r + "\r\n"
-	}
+	recipientList := recipientListToString(recipients)
 
 	resp, err := c.HTTP.PostForm(sendPrivateMessageURL, url.Values{
 		"add_recipient": {
@@ -48,4 +45,12 @@ func (c *Client) SendPrivateMessage(recipients []string, subject, content string
 
 	// Get form error
 	return util.GetFormError(resp.Body)
+}
+
+func recipientListToString(list []string) string {
+	recipientList := ""
+	for _, r := range list {
+		recipientList += r + "\r\n"
+	}
+	return recipientList
 }
