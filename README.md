@@ -2,11 +2,21 @@
 
 Path of Exile forum client. Useful for automating tasks on the forum such as bots or gathering data.
 
+## Usage
+
+First get the package:
+
+`go get github.com/raggaer/respoe/...`
+
+You can then use this as a library for developing tools related to the Path of Exile website / forum.
+
 ## Features
 
 Below is a list of the features that are already completed:
 
 ### Client
+
+[![GoDoc](https://godoc.org/github.com/Raggaer/respoe/client?status.svg)](http://godoc.org/github.com/Raggaer/respoe/client)
 
 - [x] Login
 - [x] Logout
@@ -17,6 +27,8 @@ Below is a list of the features that are already completed:
 
 ### Forum
 
+[![GoDoc](https://godoc.org/github.com/Raggaer/respoe/forum?status.svg)](http://godoc.org/github.com/Raggaer/respoe/forum)
+
 - [x] List with stats
 - [x] Retrieve specific forum pagination information (first, current and last page)
 - [x] Retrieve all threads from a forum (with status, views, author, creation date and replies)
@@ -25,8 +37,11 @@ Below is a list of the features that are already completed:
 
 ## Util
 
+[![GoDoc](https://godoc.org/github.com/Raggaer/respoe/util?status.svg)](http://godoc.org/github.com/Raggaer/respoe/util)
+
 - [x] Retrieve pagination from any valid page
 - [x] Retrieve hash value from any valid form
+- [x] Retrieve hash value from any reply thread form
 - [x] Retrieve errors from a submitted form
 
 ## Testing
