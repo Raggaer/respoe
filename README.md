@@ -21,6 +21,7 @@ Below is a list of the features that are already completed:
 - [x] Retrieve specific forum pagination information (first, current and last page)
 - [x] Retrieve all threads from a forum (with status, views, author, creation date and replies)
 - [x] Retrieve all posts from a thread (content, author and creation date)
+- [x] Reply to a thread
 
 ## Util
 

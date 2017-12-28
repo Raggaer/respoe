@@ -8,6 +8,7 @@ import (
 
 // Thread forum thread
 type Thread struct {
+	ID         int64
 	Staff      bool
 	Support    bool
 	Sticky     bool

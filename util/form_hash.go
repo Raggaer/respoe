@@ -28,3 +28,25 @@ func GetFormHash(url string, c *http.Client) (string, error) {
 
 	return hashValue, nil
 }
+
+// GetReplyHash returns a XSRF hash of the given reply form
+func GetReplyHash(url string, c *http.Client) (string, error) {
+	getResp, err := c.Get(url)
+	if err != nil {
+		return "", err
+	}
+
+	defer getResp.Body.Close()
+
+	doc, err := goquery.NewDocumentFromReader(getResp.Body)
+	if err != nil {
+		return "", err
+	}
+
+	hashValue, found := doc.Find("input[name='forum_post']").Attr("value")
+	if !found {
+		return "", errors.New("Unable to find form hash field")
+	}
+
+	return hashValue, nil
+}

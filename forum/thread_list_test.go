@@ -24,15 +24,18 @@ func TestGetThreadList(t *testing.T) {
 
 	// We check for the first thread on the forum
 	// If the sticky thread changes the test will fail
-	if threads[0].Title != "Spelling mistakes and typos" || !threads[0].Staff || !threads[0].Sticky {
+	if threads[0].Title != "Spelling mistakes and typos" || !threads[0].Staff || !threads[0].Sticky || threads[0].ID != 19091 {
 		t.Fatalf(
 			`Unexpected first thread information. 
 			Expected title 'Spelling mistakes and typos' got '%s'.
 			Expected staff thread type got %t.
-			Expected sticky thread type got %t.`,
+			Expected sticky thread type got %t.
+			Expected ID %d got %d.`,
 			threads[0].Title,
 			threads[0].Staff,
 			threads[0].Sticky,
+			19091,
+			threads[0].ID,
 		)
 	}
 

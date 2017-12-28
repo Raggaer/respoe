@@ -1,6 +1,8 @@
 package forum
 
 import (
+	"errors"
+	"fmt"
 	"strconv"
 	"strings"
 	"time"
@@ -23,6 +25,9 @@ func (f *Forum) GetThreadList(page int, c *client.Client) ([]*Thread, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	// Parsing error
+	var parsingError error
 
 	threadList := []*Thread{}
 
@@ -56,27 +61,59 @@ func (f *Forum) GetThreadList(page int, c *client.Client) ([]*Thread, error) {
 		threadTitleURL, ok := threadTitle.Attr("href")
 
 		if !ok {
+			parsingError = errors.New("Unable to retrieve thread title 'href' attribute")
 			return
 		}
 
+		// Retrieve thread identifier from URL
+		threadURLParts := strings.Split(threadTitleURL, "/")
+		if len(threadURLParts) < 4 {
+			parsingError = fmt.Errorf(
+				"Unable to parse thread url parts. Expected length 4 got %d",
+				len(threadURLParts),
+			)
+			return
+		}
+
+		threadID, err := strconv.ParseInt(threadURLParts[3], 10, 64)
+		if err != nil {
+			parsingError = fmt.Errorf(
+				"Unable to parse thread identifier: %s",
+				err,
+			)
+			return
+		}
+
+		t.ID = threadID
 		t.URL = threadTitleURL
 		t.Title = strings.TrimSpace(threadTitle.Text())
 
 		// Retrieve pagination information
 		pagination := thread.Children().NextFiltered("div.forum_pagination")
-		firstPage, err := strconv.Atoi(pagination.Children().First().Text())
-		if err != nil {
-			return
-		}
-		lastPage, err := strconv.Atoi(pagination.Children().Last().Text())
-		if err != nil {
-			return
-		}
 
-		t.Pagination = &util.Pagination{
-			First:   firstPage,
-			Current: firstPage,
-			Last:    lastPage,
+		if pagination.Length() > 0 {
+			firstPage, err := strconv.Atoi(pagination.Children().First().Text())
+			if err != nil {
+				parsingError = fmt.Errorf(
+					"Unable to parse thread first page: %s",
+					err,
+				)
+				return
+			}
+			lastPage, err := strconv.Atoi(pagination.Children().Last().Text())
+			if err != nil {
+				parsingError = fmt.Errorf(
+					"Unable to parse thread last page: %s",
+					err,
+				)
+				return
+			}
+
+			t.Pagination = &util.Pagination{
+				First:   firstPage,
+				Current: firstPage,
+				Last:    lastPage,
+			}
 		}
 
 		// Retrieve thread author
@@ -87,9 +124,13 @@ func (f *Forum) GetThreadList(page int, c *client.Client) ([]*Thread, error) {
 		// Thread creation date starts with ', Date' so we need to remove ', '
 		threadDate := postBy.Children().Last().Text()
 		threadDate = strings.TrimSpace(strings.TrimPrefix(threadDate, ", "))
-		creationDate, err := time.Parse("Jan 2, 2006 15:04:05 PM", threadDate)
 
+		creationDate, err := time.Parse("Jan 2, 2006 15:04:05 PM", threadDate)
 		if err != nil {
+			parsingError = fmt.Errorf(
+				"Unable to parse thread creation date: %s",
+				err,
+			)
 			return
 		}
 
@@ -99,10 +140,18 @@ func (f *Forum) GetThreadList(page int, c *client.Client) ([]*Thread, error) {
 		viewBlock := s.Children().NextFiltered(".views")
 		replies, err := strconv.Atoi(viewBlock.Children().First().ChildrenFiltered("span").Text())
 		if err != nil {
+			parsingError = fmt.Errorf(
+				"Unable to parse thread replies number: %s",
+				err,
+			)
 			return
 		}
 		views, err := strconv.Atoi(viewBlock.Children().Last().ChildrenFiltered("span").Text())
 		if err != nil {
+			parsingError = fmt.Errorf(
+				"Unable to parse thread views number: %s",
+				err,
+			)
 			return
 		}
 
@@ -112,5 +161,5 @@ func (f *Forum) GetThreadList(page int, c *client.Client) ([]*Thread, error) {
 		threadList = append(threadList, t)
 	})
 
-	return threadList, nil
+	return threadList, parsingError
 }
