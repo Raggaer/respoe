@@ -2,6 +2,12 @@
 
 Path of Exile forum client. Useful for automating tasks on the Path of Exile website or forum (bots or just gathering data).
 
+It makes requests and then parses the response to fetch all the needed data. The library is separated in three packages:
+
+- Client: Related to all account features (login, logout, private messages, ...).
+- Forum: Related to all forum data (threads, posts, replying, ...).
+- Util: Related to util methods for developing tools (get XSRF data, get form errors, ...).
+
 ## Usage
 
 First get the package:
@@ -35,7 +41,7 @@ Below is a list of the features that are already completed:
 - [x] Retrieve all posts from a thread (content, author and creation date)
 - [x] Reply to a thread
 
-## Util
+### Util
 
 [![GoDoc](https://godoc.org/github.com/Raggaer/respoe/util?status.svg)](http://godoc.org/github.com/Raggaer/respoe/util)
 
