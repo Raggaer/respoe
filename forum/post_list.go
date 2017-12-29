@@ -1,6 +1,7 @@
 package forum
 
 import (
+	"fmt"
 	"strconv"
 	"time"
 
@@ -24,18 +25,30 @@ func (t *Thread) GetPostList(page int, c *client.Client) ([]*Post, error) {
 
 	postList := []*Post{}
 
+	// Parsing error
+	var parsingError error
+
 	forumTable := doc.Find(".forumPostListTable").ChildrenFiltered("tbody")
 	forumTable.Children().Each(func(i int, s *goquery.Selection) {
 		p := &Post{}
 
-		// Check if thread is a staff post
+		// Check if post is made by staff
 		if s.HasClass("staff") {
 			p.Staff = true
+		}
+
+		// Check if post is made by a valuable poster
+		if s.HasClass("valued-poster") {
+			p.ValuedPoster = true
 		}
 
 		// Retrieve post content
 		postContent, err := s.Children().First().Children().NextFiltered("div.content").Html()
 		if err != nil {
+			parsingError = fmt.Errorf(
+				"Unable to retrieve post content HTML: %s",
+				err,
+			)
 			return
 		}
 
@@ -50,6 +63,10 @@ func (t *Thread) GetPostList(page int, c *client.Client) ([]*Post, error) {
 			s.Children().Last().Children().First().Children().NextFiltered("div.posted-by").Children().NextFiltered("span.post_date").Text(),
 		)
 		if err != nil {
+			parsingError = fmt.Errorf(
+				"Unable to parse post creation date: %s",
+				err,
+			)
 			return
 		}
 
@@ -58,5 +75,5 @@ func (t *Thread) GetPostList(page int, c *client.Client) ([]*Post, error) {
 		postList = append(postList, p)
 	})
 
-	return postList, nil
+	return postList, parsingError
 }

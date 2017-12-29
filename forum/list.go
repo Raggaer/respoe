@@ -1,6 +1,7 @@
 package forum
 
 import (
+	"fmt"
 	"strconv"
 
 	"github.com/PuerkitoBio/goquery"
@@ -23,6 +24,9 @@ func GetForumList(c *client.Client) ([]*Forum, error) {
 		return nil, err
 	}
 
+	// Parsing error
+	var parsingError error
+
 	forumList := []*Forum{}
 
 	doc.Find("div.forum_name").Each(func(i int, s *goquery.Selection) {
@@ -34,11 +38,19 @@ func GetForumList(c *client.Client) ([]*Forum, error) {
 
 		threads, err := strconv.Atoi(stats.Children().First().ChildrenFiltered("span").Text())
 		if err != nil {
+			parsingError = fmt.Errorf(
+				"Unable to parse number of threads: %s",
+				err,
+			)
 			return
 		}
 
 		posts, err := strconv.Atoi(stats.Children().First().Next().ChildrenFiltered("span").Text())
 		if err != nil {
+			parsingError = fmt.Errorf(
+				"Unable to parse number of posts: %s",
+				err,
+			)
 			return
 		}
 
@@ -52,5 +64,5 @@ func GetForumList(c *client.Client) ([]*Forum, error) {
 		forumList = append(forumList, f)
 	})
 
-	return forumList, nil
+	return forumList, parsingError
 }

@@ -2,6 +2,7 @@ package client
 
 import (
 	"errors"
+	"fmt"
 	"strconv"
 	"strings"
 	"time"
@@ -29,6 +30,9 @@ func (c *Client) GetInbox(page int) ([]*PrivateMessage, error) {
 		return nil, err
 	}
 
+	// Parsing error
+	var parsingError error
+
 	inbox := []*PrivateMessage{}
 
 	messageList := doc.Find(".pm-list").ChildrenFiltered("tbody").Children()
@@ -39,6 +43,7 @@ func (c *Client) GetInbox(page int) ([]*PrivateMessage, error) {
 		// Read or Unread
 		status, ok := s.Children().First().Children().First().Attr("alt")
 		if !ok {
+			parsingError = errors.New("Unable to retrieve message status")
 			return
 		}
 
@@ -50,6 +55,7 @@ func (c *Client) GetInbox(page int) ([]*PrivateMessage, error) {
 		// Retrieve message URL
 		messageURL, ok := s.Children().NextFiltered(".message-details").Children().First().Children().First().Attr("href")
 		if !ok {
+			parsingError = errors.New("Unable to retrieve message url 'href' attribute")
 			return
 		}
 
@@ -61,6 +67,10 @@ func (c *Client) GetInbox(page int) ([]*PrivateMessage, error) {
 		// Retrieve message date
 		messageDate, err := time.Parse("Jan 2, 2006 15:04:05 PM", s.Children().NextFiltered(".message-details").Children().Last().Text())
 		if err != nil {
+			parsingError = fmt.Errorf(
+				"Unable to retrieve message date: %s",
+				err,
+			)
 			return
 		}
 
@@ -69,5 +79,5 @@ func (c *Client) GetInbox(page int) ([]*PrivateMessage, error) {
 		inbox = append(inbox, d)
 	})
 
-	return inbox, nil
+	return inbox, parsingError
 }

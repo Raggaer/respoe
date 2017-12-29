@@ -1,6 +1,7 @@
 package client
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 
@@ -23,6 +24,9 @@ func (c *Client) GetDealList() ([]*Deal, error) {
 		return nil, err
 	}
 
+	// Parsing error
+	var parsingError error
+
 	dealList := []*Deal{}
 
 	shopItems := doc.Find("div.shopItems").Children()
@@ -35,6 +39,10 @@ func (c *Client) GetDealList() ([]*Deal, error) {
 		// Retrieve deal price
 		dealPrice, err := strconv.Atoi(s.Children().NextFiltered("div.price").Text())
 		if err != nil {
+			parsingError = fmt.Errorf(
+				"Unable to parse deal price: %s",
+				err,
+			)
 			return
 		}
 
@@ -46,5 +54,5 @@ func (c *Client) GetDealList() ([]*Deal, error) {
 		dealList = append(dealList, d)
 	})
 
-	return dealList, nil
+	return dealList, parsingError
 }

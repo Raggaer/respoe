@@ -1,6 +1,6 @@
 # Respoe
 
-Path of Exile forum client. Useful for automating tasks on the forum such as bots or gathering data.
+Path of Exile forum client. Useful for automating tasks on the Path of Exile website or forum (bots or just gathering data).
 
 ## Usage
 
