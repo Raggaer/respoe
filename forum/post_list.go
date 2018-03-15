@@ -72,6 +72,21 @@ func (t *Thread) GetPostList(page int, c *client.Client) ([]*Post, error) {
 
 		p.CreatedAt = postCreatedAt
 
+		// Retrieve post badges
+		s.Children().Last().Children().First().Children().NextFiltered("div.posted-by").Children().NextFiltered("div.badges").Children().Each(
+			func(i int, b *goquery.Selection) {
+				badge := b.Children().First()
+				alt, altFound := badge.Attr("alt")
+				url, urlFound := badge.Attr("src")
+				if altFound && urlFound {
+					p.Badges = append(p.Badges, PostBadge{
+						Name: alt,
+						URL:  url,
+					})
+				}
+			},
+		)
+
 		postList = append(postList, p)
 	})
 
