@@ -9,6 +9,7 @@ type Post struct {
 	Content      string
 	Author       string
 	Badges       []PostBadge
+	Avatar       string
 	Achievement  PostAchievement
 	CreatedAt    time.Time
 }

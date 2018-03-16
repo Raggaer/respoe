@@ -54,6 +54,12 @@ func (t *Thread) GetPostList(page int, c *client.Client) ([]*Post, error) {
 
 		p.Content = postContent
 
+		// Retrieve post avatar
+		avatarURL, avatarFound := s.Children().Last().Children().First().Children().NextFiltered("div.avatar").Children().First().Attr("src")
+		if avatarFound {
+			p.Avatar = avatarURL
+		}
+
 		// Retrieve post author
 		p.Author = s.Children().Last().Children().First().Children().NextFiltered("div.posted-by").Children().NextFiltered("span.post_by_account").Text()
 
