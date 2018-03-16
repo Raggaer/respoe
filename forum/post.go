@@ -9,6 +9,7 @@ type Post struct {
 	Content      string
 	Author       string
 	Badges       []PostBadge
+	Achievement  PostAchievement
 	CreatedAt    time.Time
 }
 
@@ -16,4 +17,10 @@ type Post struct {
 type PostBadge struct {
 	Name string
 	URL  string
+}
+
+// PostAchievement post league achievements
+type PostAchievement struct {
+	Alt string
+	URL string
 }

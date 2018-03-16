@@ -57,6 +57,17 @@ func (t *Thread) GetPostList(page int, c *client.Client) ([]*Post, error) {
 		// Retrieve post author
 		p.Author = s.Children().Last().Children().First().Children().NextFiltered("div.posted-by").Children().NextFiltered("span.post_by_account").Text()
 
+		// Retrieve post achievements
+		achievementsDiv := s.Children().Last().Children().First().Children().NextFiltered("div.posted-by").Children().NextFiltered("span.post_by_account").First().Children().First()
+		achievementsURL, urlFound := achievementsDiv.Attr("src")
+		achievementsAlt, altFound := achievementsDiv.Attr("alt")
+		if urlFound && altFound {
+			p.Achievement = PostAchievement{
+				URL: achievementsURL,
+				Alt: achievementsAlt,
+			}
+		}
+
 		// Retrieve post creation date
 		postCreatedAt, err := time.Parse(
 			"Jan 2, 2006 15:04:05 PM",
