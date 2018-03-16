@@ -31,4 +31,9 @@ func TestGetPostList(t *testing.T) {
 	if !posts[1].Staff {
 		t.Fatalf("Wrong second post staff type got %t", posts[1].Staff)
 	}
+
+	// Check for badges at thrid post
+	if len(posts[2].Badges) <= 0 {
+		t.Fatalf("Wrong third post badges amount got %d", len(posts[2].Badges))
+	}
 }
