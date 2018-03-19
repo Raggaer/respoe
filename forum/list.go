@@ -3,6 +3,7 @@ package forum
 import (
 	"fmt"
 	"strconv"
+	"time"
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/raggaer/respoe/client"
@@ -54,11 +55,48 @@ func GetForumList(c *client.Client) ([]*Forum, error) {
 			return
 		}
 
+		// Retrieve last post <td class="last_post"></td> node
+		lastPost := s.Parent().Parent().Children().NextFiltered("td.last_post")
+
+		postAuthor := lastPost.Children().First().Children().First().Text()
+
+		postURL, ok := lastPost.Children().NextFiltered("div.post_date").Children().First().Attr("href")
+		if !ok {
+			return
+		}
+
+		postDate, err := time.Parse(
+			"Jan 2, 2006 15:04:05 PM",
+			lastPost.Children().NextFiltered("div.post_date").Text(),
+		)
+		if err != nil {
+			parsingError = fmt.Errorf(
+				"Unable to parse last post date: %s",
+				err,
+			)
+			return
+		}
+
+		postAchievement := lastPost.Children().First().Children().First()
+
+		lastPostAchiv, ok := postAchievement.Children().First().Children().First().Attr("src")
+		if !ok {
+			return
+		}
+
 		f := &Forum{
 			Name:    forumName.Text(),
 			URL:     forumName.AttrOr("href", "/"),
 			Threads: threads,
 			Posts:   posts,
+			LastPost: LastPost{
+				Author:    postAuthor,
+				CreatedAt: postDate,
+				URL:       postURL,
+				Achievement: PostAchievement{
+					URL: lastPostAchiv,
+				},
+			},
 		}
 
 		forumList = append(forumList, f)
