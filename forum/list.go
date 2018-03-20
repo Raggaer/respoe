@@ -3,6 +3,7 @@ package forum
 import (
 	"fmt"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/PuerkitoBio/goquery"
@@ -33,6 +34,9 @@ func GetForumList(c *client.Client) ([]*Forum, error) {
 	doc.Find("div.forum_name").Each(func(i int, s *goquery.Selection) {
 		// Retrieve <a></a> node
 		forumName := s.ChildrenFiltered("div.name").Children()
+
+		// Retrieve forum description
+		forumDescription := strings.TrimPrefix(strings.TrimSpace(s.Parent().Text()), strings.TrimSpace(forumName.Text()))
 
 		// Retrieve <td class="stats"></td> node
 		stats := s.Parent().NextFiltered("td.stats")
@@ -85,10 +89,11 @@ func GetForumList(c *client.Client) ([]*Forum, error) {
 		}
 
 		f := &Forum{
-			Name:    forumName.Text(),
-			URL:     forumName.AttrOr("href", "/"),
-			Threads: threads,
-			Posts:   posts,
+			Name:        forumName.Text(),
+			URL:         forumName.AttrOr("href", "/"),
+			Threads:     threads,
+			Description: forumDescription,
+			Posts:       posts,
 			LastPost: LastPost{
 				Author:    postAuthor,
 				CreatedAt: postDate,

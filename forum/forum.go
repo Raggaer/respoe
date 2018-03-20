@@ -4,11 +4,12 @@ import "time"
 
 // Forum represents a forum
 type Forum struct {
-	Name     string
-	Posts    int
-	Threads  int
-	URL      string
-	LastPost LastPost
+	Name        string
+	Posts       int
+	Description string
+	Threads     int
+	URL         string
+	LastPost    LastPost
 }
 
 // LastPost represents a forum last post
