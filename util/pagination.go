@@ -28,6 +28,11 @@ func GetPagination(url string, c *http.Client) (*Pagination, error) {
 		return nil, err
 	}
 
+	return GetPaginationFromDoc(doc)
+}
+
+// GetPaginationFromDoc retrieves a pagination from a goquery document
+func GetPaginationFromDoc(doc *goquery.Document) (*Pagination, error) {
 	paginationDiv := doc.Find("div.pagination")
 
 	// Get first element

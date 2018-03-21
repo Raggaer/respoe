@@ -13,7 +13,7 @@ import (
 )
 
 // GetThreadList returns a list of threads for the given forum/page
-func (f *Forum) GetThreadList(page int, c *client.Client) ([]*Thread, error) {
+func (f *Forum) GetThreadList(page int, c *client.Client) (*ThreadList, error) {
 	resp, err := c.HTTP.Get(forumIndexURL + f.URL + "/page/" + strconv.Itoa(page))
 	if err != nil {
 		return nil, err
@@ -28,6 +28,9 @@ func (f *Forum) GetThreadList(page int, c *client.Client) ([]*Thread, error) {
 
 	// Parsing error
 	var parsingError error
+
+	// Retrieve forum name
+	forumName := strings.TrimPrefix(doc.Find(".topBar.first .breadcrumb").Text(), "Forum Index»")
 
 	threadList := []*Thread{}
 
@@ -161,5 +164,15 @@ func (f *Forum) GetThreadList(page int, c *client.Client) ([]*Thread, error) {
 		threadList = append(threadList, t)
 	})
 
-	return threadList, parsingError
+	// Retrieve thread page pagination
+	threadPagination, err := util.GetPaginationFromDoc(doc)
+	if err != nil {
+		return nil, err
+	}
+
+	return &ThreadList{
+		ForumName:  forumName,
+		List:       threadList,
+		Pagination: threadPagination,
+	}, parsingError
 }

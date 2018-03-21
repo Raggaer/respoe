@@ -6,6 +6,13 @@ import (
 	"github.com/raggaer/respoe/util"
 )
 
+// ThreadList forum thread list
+type ThreadList struct {
+	ForumName  string
+	Pagination *util.Pagination
+	List       []*Thread
+}
+
 // Thread forum thread
 type Thread struct {
 	ID         int64
