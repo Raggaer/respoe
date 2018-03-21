@@ -1,6 +1,19 @@
 package forum
 
-import "time"
+import (
+	"time"
+
+	"github.com/raggaer/respoe/util"
+)
+
+// PostList thread post list
+type PostList struct {
+	List       []*Post
+	Title      string
+	ForumName  string
+	ForumURL   string
+	Pagination *util.Pagination
+}
 
 // Post thread post content
 type Post struct {

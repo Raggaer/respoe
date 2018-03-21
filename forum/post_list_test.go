@@ -23,17 +23,17 @@ func TestGetPostList(t *testing.T) {
 	}
 
 	// Check for first post author
-	if posts[0].Author != "Cristo9FP" {
-		t.Fatalf("Wrong first post author. Expected 'Cristo9FP' got %s", posts[0].Author)
+	if posts.List[0].Author != "Cristo9FP" {
+		t.Fatalf("Wrong first post author. Expected 'Cristo9FP' got %s", posts.List[0].Author)
 	}
 
 	// Check for staff post at second post
-	if !posts[1].Staff {
-		t.Fatalf("Wrong second post staff type got %t", posts[1].Staff)
+	if !posts.List[1].Staff {
+		t.Fatalf("Wrong second post staff type got %t", posts.List[1].Staff)
 	}
 
 	// Check for badges at thrid post
-	if len(posts[2].Badges) <= 0 {
-		t.Fatalf("Wrong third post badges amount got %d", len(posts[2].Badges))
+	if len(posts.List[2].Badges) <= 0 {
+		t.Fatalf("Wrong third post badges amount got %d", len(posts.List[2].Badges))
 	}
 }
