@@ -32,7 +32,6 @@ type Item struct {
 // ItemSocket defines a item socket
 type ItemSocket struct {
 	Group       int    `json:"group"`
-	Attr        string `json:"attr"`
 	SocketColor string `json:"sColour"`
 }
 
