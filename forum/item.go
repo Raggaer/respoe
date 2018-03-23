@@ -20,11 +20,20 @@ type Item struct {
 	Name                 string
 	TypeLine             string `json:"typeline"`
 	Identified           bool
-	FrameType            int      `json:"frameType"`
-	ImplicitMods         []string `json:"implicitMods"`
-	CraftedMods          []string `json:"craftedMods"`
-	ExplicitMods         []string `json:"explicitMods"`
-	FlavourText          []string `json:"flavourText"`
+	FrameType            int            `json:"frameType"`
+	ImplicitMods         []string       `json:"implicitMods"`
+	CraftedMods          []string       `json:"craftedMods"`
+	ExplicitMods         []string       `json:"explicitMods"`
+	FlavourText          []string       `json:"flavourText"`
+	Properties           []ItemProperty `json:"properties"`
+}
+
+// ItemProperty defines a set of item property values
+type ItemProperty struct {
+	Name        string
+	DisplayMode int `json:"displayMode"`
+	Type        int
+	Values      [][]interface{}
 }
 
 // ParseItem parses a Path of Exile forum item
