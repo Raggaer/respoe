@@ -12,6 +12,7 @@ type PostList struct {
 	Title      string
 	ForumName  string
 	ForumURL   string
+	Items      []*Item
 	Pagination *util.Pagination
 }
 

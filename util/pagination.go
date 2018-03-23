@@ -38,7 +38,7 @@ func GetPaginationFromDoc(doc *goquery.Document) (*Pagination, error) {
 	// Get first element
 	firstPage := paginationDiv.Children().First()
 
-	pag := &Pagination{}
+	pag := &Pagination{1, 1, 1}
 
 	// Check if first page is "Prev" button
 	if firstPage.Text() == "Prev" {
@@ -47,10 +47,10 @@ func GetPaginationFromDoc(doc *goquery.Document) (*Pagination, error) {
 
 	firstPageInt, err := strconv.Atoi(firstPage.Text())
 	if err != nil {
-		return nil, err
+		pag.First = 1
+	} else {
+		pag.First = firstPageInt
 	}
-
-	pag.First = firstPageInt
 
 	// Get last page
 	lastPage := paginationDiv.Children().Last()
@@ -62,20 +62,22 @@ func GetPaginationFromDoc(doc *goquery.Document) (*Pagination, error) {
 
 	lastPageInt, err := strconv.Atoi(lastPage.Text())
 	if err != nil {
-		return nil, err
+		pag.Last = 1
+	} else {
+		pag.Last = lastPageInt
 	}
-
-	pag.Last = lastPageInt
 
 	// Find current page
-	currentPage := paginationDiv.ChildrenFiltered("a.current").Text()
+	paginationDiv.Children().Each(func(i int, s *goquery.Selection) {
+		if s.HasClass("current") {
+			currentPageInt, err := strconv.Atoi(s.Text())
+			if err != nil {
+				return
+			}
 
-	currentPageInt, err := strconv.Atoi(currentPage)
-	if err != nil {
-		return nil, err
-	}
-
-	pag.Current = currentPageInt
+			pag.Current = currentPageInt
+		}
+	})
 
 	return pag, nil
 }

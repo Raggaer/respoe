@@ -30,6 +30,58 @@ func (t *Thread) GetPostList(page int, c *client.Client) (*PostList, error) {
 	// Parsing error
 	var parsingError error
 
+	// Post item information place holder
+	itemList := []*Item{}
+
+	// Retrieve item information JSON data
+	doc.Find("script").Each(func(i int, s *goquery.Selection) {
+		// Check if its the script tag we are looking for
+		if !strings.Contains(
+			s.Text(), "require([\"PoE/Item/DeferredItemRenderer\"]",
+		) {
+			return
+		}
+
+		// Grab JSON data and remove JavaScript calls
+		v := s.Text()
+		v = strings.TrimSpace(v[135 : len(v)-40])
+
+		count := 1
+		nextExit := false
+
+		// Parse every item
+		for {
+			s := strings.Split(v, ",[]],["+strconv.Itoa(count))
+			if len(s) <= 1 {
+				nextExit = true
+			}
+
+			// Parse current item
+			item, err := ParseItem([]byte(s[0]))
+			if err != nil {
+				parsingError = fmt.Errorf(
+					"Unable to parse item %d: %s",
+					count,
+					err,
+				)
+				return
+			}
+
+			// Add item to the post list
+			itemList = append(itemList, item)
+
+			// Remove item from the feed
+			v = v[len(s[0]):len(v)]
+			v = strings.TrimPrefix(v, ",[]],["+strconv.Itoa(count)+",")
+
+			count++
+
+			if nextExit {
+				break
+			}
+		}
+	})
+
 	// Retrieve forum url
 	forumURL, ok := doc.Find(".topBar.first .breadcrumb").Children().Next().Next().Attr("href")
 	if !ok {
@@ -128,6 +180,7 @@ func (t *Thread) GetPostList(page int, c *client.Client) (*PostList, error) {
 	}
 
 	return &PostList{
+		Items:      itemList,
 		ForumName:  forumName,
 		Title:      threadName,
 		List:       postList,
