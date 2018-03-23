@@ -26,6 +26,14 @@ type Item struct {
 	ExplicitMods         []string       `json:"explicitMods"`
 	FlavourText          []string       `json:"flavourText"`
 	Properties           []ItemProperty `json:"properties"`
+	Sockets              []ItemSocket   `json:"sockets"`
+}
+
+// ItemSocket defines a item socket
+type ItemSocket struct {
+	Group       int    `json:"group"`
+	Attr        string `json:"attr"`
+	SocketColor string `json:"sColour"`
 }
 
 // ItemProperty defines a set of item property values
