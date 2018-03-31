@@ -8,6 +8,8 @@ It makes requests and then parses the response to fetch all the needed data. The
 - Forum: Related to all forum data (threads, posts, replying, ...).
 - Util: Related to util methods for developing tools (get XSRF data, get form errors, ...).
 
+This library was made for a [responsive Path of Exile forum client](https://respoe.raggaer.pw)
+
 ## Usage
 
 First get the package:
@@ -35,10 +37,11 @@ Below is a list of the features that are already completed:
 
 [![GoDoc](https://godoc.org/github.com/Raggaer/respoe/forum?status.svg)](http://godoc.org/github.com/Raggaer/respoe/forum)
 
-- [x] List with stats
+- [x] Forum list
 - [x] Retrieve specific forum pagination information (first, current and last page)
 - [x] Retrieve all threads from a forum (with status, views, author, creation date and replies)
-- [x] Retrieve all posts from a thread (content, author and creation date)
+- [x] Retrieve all posts from a thread (content, author, creation date, items)
+- [x] Work with forum items (sockets)
 - [x] Reply to a thread
 
 ### Util
