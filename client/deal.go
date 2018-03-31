@@ -5,4 +5,5 @@ type Deal struct {
 	Description string
 	Name        string
 	Price       int
+	Video 	    string
 }

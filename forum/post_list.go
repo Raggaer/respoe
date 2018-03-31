@@ -94,9 +94,52 @@ func (t *Thread) GetPostList(page int, c *client.Client) (*PostList, error) {
 	// Retrieve thread name
 	threadName := doc.Find(".topBar.last.layoutBoxTitle").Text()
 
+	if forumName == "" && threadName == "" && forumURL == "" {
+		pageTitle := strings.Split(doc.Find("title").Text(), "-")
+		if len(pageTitle) >= 2 {
+			forumName = pageTitle[1]
+			threadName = pageTitle[2]
+			switch strings.TrimSpace(forumName) {
+			case "Announcements":
+				forumURL = "/forum/view-forum/news"
+			}
+		}
+	}
+
 	forumTable := doc.Find(".forumPostListTable").ChildrenFiltered("tbody")
 	forumTable.Children().Each(func(i int, s *goquery.Selection) {
 		p := &Post{}
+
+		if s.HasClass("newsPostInfo") {
+			return
+		}
+
+		// Special post from admin
+		if s.HasClass("newsPost") {
+			postContent, err := s.Children().First().Children().First().Children().Last().Children().First().Children().First().Html()
+			if err != nil {
+				parsingError = fmt.Errorf(
+					"Unable to retrieve post content HTML: %s",
+					err,
+				)
+				return
+			}
+
+			p.Content = postContent
+			postList = append(postList, p)
+
+			// Retrieve post info part
+			p.Author = s.Next().Children().First().Children().First().ChildrenFiltered(".post_by_account").Text()
+
+			postCreatedAt, err := time.Parse(
+				"Jan 2, 2006 15:04:05 PM",
+				s.Next().Children().First().Children().First().ChildrenFiltered(".post_date").Text(),
+			)
+
+			p.CreatedAt = postCreatedAt
+
+			return
+		}
 
 		// Check if post is made by staff
 		if s.HasClass("staff") {
