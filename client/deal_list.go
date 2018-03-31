@@ -51,6 +51,14 @@ func (c *Client) GetDealList() ([]*Deal, error) {
 		// Retrieve deal description
 		d.Description = strings.TrimSpace(s.Children().NextFiltered("div.description").Text())
 
+		// Retrieve deal video
+		videoSrc, ok := s.Children().NextFiltered("div.shopBuyItemModal").Children().First().Children().First().Contents().Attr("data-src")
+		if !ok {
+			return
+		}
+
+		d.Video = videoSrc
+
 		dealList = append(dealList, d)
 	})
 
