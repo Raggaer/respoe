@@ -3,6 +3,7 @@ package forum
 import (
 	"time"
 
+	"github.com/raggaer/respoe/client"
 	"github.com/raggaer/respoe/util"
 )
 
@@ -12,7 +13,7 @@ type PostList struct {
 	Title      string
 	ForumName  string
 	ForumURL   string
-	Items      []*Item
+	Items      []*client.Item
 	Pagination *util.Pagination
 }
 
@@ -22,16 +23,10 @@ type Post struct {
 	ValuedPoster bool
 	Content      string
 	Author       string
-	Badges       []PostBadge
+	Badges       []*client.Badge
 	Avatar       string
 	Achievement  PostAchievement
 	CreatedAt    time.Time
-}
-
-// PostBadge post supporter pack badge
-type PostBadge struct {
-	Name string
-	URL  string
 }
 
 // PostAchievement post league achievements

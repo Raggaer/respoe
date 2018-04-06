@@ -31,7 +31,7 @@ func (t *Thread) GetPostList(page int, c *client.Client) (*PostList, error) {
 	var parsingError error
 
 	// Post item information place holder
-	itemList := []*Item{}
+	itemList := []*client.Item{}
 
 	// Retrieve item information JSON data
 	doc.Find("script").Each(func(i int, s *goquery.Selection) {
@@ -57,7 +57,7 @@ func (t *Thread) GetPostList(page int, c *client.Client) (*PostList, error) {
 			}
 
 			// Parse current item
-			item, err := ParseItem([]byte(s[0]))
+			item, err := client.ParseItem([]byte(s[0]))
 			if err != nil {
 				parsingError = fmt.Errorf(
 					"Unable to parse item %d: %s",
@@ -205,7 +205,7 @@ func (t *Thread) GetPostList(page int, c *client.Client) (*PostList, error) {
 				alt, altFound := badge.Attr("alt")
 				url, urlFound := badge.Attr("src")
 				if altFound && urlFound {
-					p.Badges = append(p.Badges, PostBadge{
+					p.Badges = append(p.Badges, &client.Badge{
 						Name: alt,
 						URL:  url,
 					})

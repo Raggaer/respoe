@@ -1,14 +1,12 @@
 # Respoe
 
-Path of Exile forum client. Useful for automating tasks on the Path of Exile website or forum (bots or just gathering data).
+Path of Exile website client. Useful for automating tasks on the Path of Exile website or forum (bots or just gathering data).
 
 It makes requests and then parses the response to fetch all the needed data. The library is separated in three packages:
 
-- Client: Related to all account features (login, logout, private messages, ...).
-- Forum: Related to all forum data (threads, posts, replying, ...).
-- Util: Related to util methods for developing tools (get XSRF data, get form errors, ...).
-
-This library was made for a [responsive Path of Exile forum client](https://respoe.raggaer.pw)
+- Client: Related to all account features.
+- Forum: Related to all forum data.
+- Util: Related to util methods for developing tools.
 
 ## Usage
 
@@ -32,6 +30,9 @@ Below is a list of the features that are already completed:
 - [x] Retrieve inbox by page
 - [x] Send private messages
 - [x] Retrieve special offer list
+- [x] Retrieve account profile
+- [x] Retrieve account character list
+- [x] Retrieve account character items
 
 ### Forum
 
@@ -62,7 +63,7 @@ All methods are testable. To run the tests you need to set some environment vari
 - `RESPOE_NEW_PASSWORD`: New password for your account (used for change password).
 - `RESPOE_RECIPIENT`: Recipient for sending private messages (used for private message sending).
 
-**This variables are only needed if you want to run the tests. For usage these are not needed**
+**This variables are only needed if you want to run the tests. These are not needed for regular usage**
 
 ## License
 

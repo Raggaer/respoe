@@ -1,4 +1,4 @@
-package forum
+package client
 
 import (
 	"encoding/json"
