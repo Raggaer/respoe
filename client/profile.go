@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
 	"io/ioutil"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -17,7 +18,9 @@ const (
 
 // Profile website account profile
 type Profile struct {
-	Guild       string
+	GuildName   string
+	GuildURL    string
+	GuildID     int
 	JoinedAt    time.Time
 	ForumPosts  int
 	LastVisited time.Time
@@ -60,13 +63,32 @@ func (c *Client) GetAccountProfile(account string) (*Profile, error) {
 		return nil, err
 	}
 
+	profile := Profile{}
+
 	profileBoxes := doc.Find(".profile-boxes").Children()
 
 	// Retrieve profile basic information
 	basicBox := profileBoxes.First().Children().Last()
 
 	// Guild name
-	guildName := basicBox.Children().First().Next().Next().Text()
+	profile.GuildName = basicBox.Children().First().Next().Next().Text()
+
+	if profile.GuildName != "None" {
+		// Retrieve guild URL
+		guildURL, ok := basicBox.Children().First().Next().Next().Attr("src")
+		if ok {
+			profile.GuildURL = guildURL
+
+			// Retrieve guild ID from guild URL
+			guildID, err := strconv.Atoi(strings.TrimPrefix(profile.GuildURL, "/guild/profile/"))
+			if err == nil {
+				profile.GuildID = guildID
+			}
+		}
+	}
+
+	// Remove children elements leaving only floating text
+	basicBox.Children().Remove()
 
 	// Retrieve profile badges
 	badgeList := []*Badge{}
@@ -98,11 +120,6 @@ func (c *Client) GetAccountProfile(account string) (*Profile, error) {
 			characters = true
 		}
 	})
-
-	profile := Profile{
-		Guild:  guildName,
-		Badges: badgeList,
-	}
 
 	if characters {
 		characterList, err := c.ProfileCharacters(account)
