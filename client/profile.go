@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
+	"golang.org/x/net/html"
 	"io/ioutil"
 	"strconv"
 	"strings"
@@ -87,6 +88,44 @@ func (c *Client) GetAccountProfile(account string) (*Profile, error) {
 		}
 	}
 
+	// only one node in the selection, the "div"
+	n := basicBox.Get(0)
+	i := -1
+	for nn := n.FirstChild; nn != nil; nn = nn.NextSibling {
+		if nn.Type == html.TextNode {
+			s := strings.TrimSpace(nn.Data)
+			if s != "" {
+				i++
+				// Forum posts
+				if i == 0 {
+					forumPosts, err := strconv.Atoi(s)
+					if err != nil {
+						continue
+					}
+					profile.ForumPosts = forumPosts
+				}
+
+				// Joined date
+				if i == 1 {
+					joinedDate, err := time.Parse("Jan 2, 2006", s)
+					if err != nil {
+						continue
+					}
+					profile.JoinedAt = joinedDate
+				}
+
+				// Last visit date
+				if i == 2 {
+					lastVisitDate, err := time.Parse("Jan 2, 2006", s)
+					if err != nil {
+						continue
+					}
+					profile.LastVisited = lastVisitDate
+				}
+			}
+		}
+	}
+
 	// Remove children elements leaving only floating text
 	basicBox.Children().Remove()
 
@@ -121,6 +160,7 @@ func (c *Client) GetAccountProfile(account string) (*Profile, error) {
 		}
 	})
 
+	// Retrieve account characters
 	if characters {
 		characterList, err := c.ProfileCharacters(account)
 		if err != nil {

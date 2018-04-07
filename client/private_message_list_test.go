@@ -15,10 +15,8 @@ func TestGetInbox(t *testing.T) {
 		t.Fatalf("Unable to login: %v", err)
 	}
 
-	inbox, err := c.GetInbox(1)
+	_, err = c.GetInbox(1)
 	if err != nil {
 		t.Fatalf("Unable to get inbox: %v", err)
 	}
-
-	t.Log(inbox[0])
 }
