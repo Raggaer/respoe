@@ -37,3 +37,35 @@ func TestGetPostList(t *testing.T) {
 		t.Fatalf("Wrong third post badges amount got %d", len(posts.List[2].Badges))
 	}
 }
+
+func TestGetPostListWithItems(t *testing.T) {
+	c, err := client.New()
+	if err != nil {
+		t.Fatalf("Unable to create http client: %v", err)
+	}
+
+	// Create dummy thread
+	f := &Thread{
+		URL: "/view-thread/545343",
+	}
+
+	posts, err := f.GetPostList(1, c)
+	if err != nil {
+		t.Fatalf("Unable to retrieve post list: %v", err)
+	}
+
+	// Check for first post author
+	if posts.List[0].Author != "mattc3303" {
+		t.Fatalf("Wrong first post author. Expected 'mattc3303' got %s", posts.List[0].Author)
+	}
+
+	// Check for first post item
+	if posts.Items[0].Name != "Mon'tregul's Grasp" {
+		t.Fatalf("Wrong first post item name. Expected 'Mon'tregul's Grasp' got %s", posts.Items[0].Name)
+	}
+
+	// Check for second post item
+	if posts.Items[1].Name != "Doedre's Damning" {
+		t.Fatalf("Wrong second post item name. Expected 'Doedre's Damning' got %s", posts.Items[1].Name)
+	}
+}
