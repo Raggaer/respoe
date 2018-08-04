@@ -80,7 +80,7 @@ type ExchangeOfferItem struct {
 	Id       string
 }
 
-// RetrieveExchange retrieves the current exchange endpoints
+// RetrieveExchange retrieves the current exchange offers
 func RetrieveExchange(league string, have, want []string, c *client.Client) ([]*ExchangeOffer, error) {
 	// Encode exchange struct into JSON
 	ex, err := json.Marshal(&ExchangeQuery{
