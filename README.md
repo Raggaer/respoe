@@ -45,6 +45,12 @@ Below is a list of the features that are already completed:
 - [x] Work with forum items (sockets)
 - [x] Reply to a thread
 
+### Trade
+
+[![GoDoc](https://godoc.org/github.com/Raggaer/respoe/trade?status.svg)](http://godoc.org/github.com/Raggaer/respoe/trade)
+
+- [x] Retrieve currency exchange offers
+
 ### Util
 
 [![GoDoc](https://godoc.org/github.com/Raggaer/respoe/util?status.svg)](http://godoc.org/github.com/Raggaer/respoe/util)
