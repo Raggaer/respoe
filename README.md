@@ -65,6 +65,11 @@ All methods are testable. To run the tests you need to set some environment vari
 
 **This variables are only needed if you want to run the tests. These are not needed for regular usage**
 
+## Example of usage
+
+Currently I developed this library mainly to parse [Path Of Exile forums](https://www.pathofexile.com/forum) to be able to create
+a [mobile-friendly forum](https://respoe.xyz)
+
 ## License
 
 **Respoe** is licensed under the **MIT** license.
