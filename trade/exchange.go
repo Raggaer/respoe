@@ -75,7 +75,7 @@ type ExchangeOfferPrice struct {
 // ExchangeOfferItem offer detailed information
 type ExchangeOfferItem struct {
 	Currency string
-	Amount   int
+	Amount   float64
 	Stock    int
 	Id       string
 }
