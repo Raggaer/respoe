@@ -14,7 +14,7 @@ First get the package:
 
 `go get github.com/raggaer/respoe/...`
 
-You can then use this as a library for developing tools related to the Path of Exile website / forum. You can automate the reading of forums, creating or replying threads or even automating private messaging (just like poe.trade bot does)
+You can then use this as a library for developing tools related to the Path of Exile website, forum or the trade site. You can automate the reading of forums, creating or replying threads or even automating private messaging (just like poe.trade bot does)
 
 ## Features
 
