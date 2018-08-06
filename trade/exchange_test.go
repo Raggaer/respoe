@@ -13,7 +13,7 @@ func TestRetrieveExchange(t *testing.T) {
 	}
 
 	// Retrieve exchange
-	offers, err := RetrieveExchange("Standard", []string{"chaos"}, []string{"alch"}, c)
+	offers, err := RetrieveExchange("Standard", []string{"chaos"}, []string{"alch"}, false, c)
 	if err != nil {
 		t.Fatalf("Unable to retrieve currency exchange: %s", err)
 	}

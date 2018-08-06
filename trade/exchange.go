@@ -81,14 +81,18 @@ type ExchangeOfferItem struct {
 }
 
 // RetrieveExchange retrieves the current exchange offers
-func RetrieveExchange(league string, have, want []string, c *client.Client) ([]*ExchangeOffer, error) {
+func RetrieveExchange(league string, have, want []string, online bool, c *client.Client) ([]*ExchangeOffer, error) {
 	// Encode exchange struct into JSON
+	opt := "online"
+	if !online {
+		opt = "any"
+	}
 	ex, err := json.Marshal(&ExchangeQuery{
 		Exchange: Exchange{
 			Have: have,
 			Want: want,
 			Status: ExchangeStatus{
-				Option: "any",
+				Option: opt,
 			},
 		},
 	})
@@ -114,6 +118,7 @@ func RetrieveExchange(league string, have, want []string, c *client.Client) ([]*
 	if err != nil {
 		return nil, err
 	}
+
 	exchangeResponse := ExchangeResponse{}
 	if err := json.Unmarshal(respContent, &exchangeResponse); err != nil {
 		return nil, err
@@ -147,6 +152,7 @@ func retrieveExchangeOffers(e *ExchangeResponse, c *client.Client) ([]*ExchangeO
 	if err != nil {
 		return nil, err
 	}
+
 	offers := ExchangeOffersResponse{}
 	if err := json.Unmarshal(respBody, &offers); err != nil {
 		return nil, err
