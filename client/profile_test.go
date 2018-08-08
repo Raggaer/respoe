@@ -23,4 +23,8 @@ func TestGetAccountProfile(t *testing.T) {
 	if char.Name != "FacebreakerBreach" {
 		t.Fatalf("Unexpected first profile character. Expected %s Got %s", "FacebreakerBreach", char.Name)
 	}
+
+	if len(profile.Characters[1].Items) <= 0 {
+		t.Fatalf("Unexpected second profile character %s. Should atleast have 1 item", profile.Characters[1].Name)
+	}
 }

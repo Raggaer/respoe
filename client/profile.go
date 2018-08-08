@@ -3,18 +3,20 @@ package client
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/PuerkitoBio/goquery"
-	"golang.org/x/net/html"
 	"io/ioutil"
+	"net/url"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/PuerkitoBio/goquery"
+	"golang.org/x/net/html"
 )
 
 const (
 	viewProfileURL        = "http://www.pathofexile.com/account/view-profile/%s"
 	profileCharactersURL  = "https://pathofexile.com/character-window/get-characters?accountName=%s"
-	profileCharacterItems = "http://www.pathofexile.com/character-window/get-items?character=%s&accountName=%s"
+	profileCharacterItems = "https://www.pathofexile.com/character-window/get-items"
 )
 
 // Profile website account profile
@@ -46,6 +48,7 @@ type Character struct {
 	Items           []*Item
 }
 
+// CharacterItems items of the profile character
 type CharacterItems struct {
 	Items []*Item `json:"items"`
 }
@@ -203,7 +206,14 @@ func (c *Client) ProfileCharacters(account string) ([]*Character, error) {
 
 // CharacterItems retrieves all items of the given character
 func (c *Client) CharacterItems(character, account string) ([]*Item, error) {
-	resp, err := c.HTTP.Get(fmt.Sprintf(profileCharacterItems, character, account))
+	resp, err := c.HTTP.PostForm(profileCharacterItems, url.Values{
+		"accountName": {
+			account,
+		},
+		"character": {
+			character,
+		},
+	})
 	if err != nil {
 		return nil, err
 	}
