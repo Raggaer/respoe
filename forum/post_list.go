@@ -44,14 +44,32 @@ func (t *Thread) GetPostList(page int, c *client.Client) (*PostList, error) {
 
 		// Grab JSON data and remove JavaScript calls
 		v := s.Text()
-		v = strings.TrimSpace(v[135 : len(v)-40])
+
+		elf := strings.Contains(v, "\"enableLeague\":false")
+		evf := strings.Contains(v, "\"enableVerified\":false")
+		esf := strings.Contains(v, "\"enableSmartLayout\":false")
+
+		if elf && !evf && !esf {
+			v = strings.TrimSpace(v[135 : len(v)-60])
+		} else if elf && evf && esf {
+			v = strings.TrimSpace(v[135 : len(v)-109])
+		} else {
+			v = strings.TrimSpace(v[135 : len(v)-40])
+		}
 
 		count := 1
 		nextExit := false
 
 		// Parse every item
 		for {
-			s := strings.Split(v, ",[]],["+strconv.Itoa(count))
+			var s []string
+			if elf && !evf && !esf {
+				s = strings.Split(v, ",{\"enableLeague\":false}],["+strconv.Itoa(count)+",")
+			} else if elf && evf && esf {
+				s = strings.Split(v, ",{\"enableVerified\":false,\"enableLeague\":false,\"enableSmartLayout\":false}],["+strconv.Itoa(count)+",")
+			} else {
+				s = strings.Split(v, ",[]],["+strconv.Itoa(count))
+			}
 			if len(s) <= 1 {
 				nextExit = true
 			}
@@ -72,7 +90,13 @@ func (t *Thread) GetPostList(page int, c *client.Client) (*PostList, error) {
 
 			// Remove item from the feed
 			v = v[len(s[0]):len(v)]
-			v = strings.TrimPrefix(v, ",[]],["+strconv.Itoa(count)+",")
+			if elf && !evf && !esf {
+				v = strings.TrimPrefix(v, ",{\"enableLeague\":false}],["+strconv.Itoa(count)+",")
+			} else if elf && evf && esf {
+				v = strings.TrimPrefix(v, ",{\"enableVerified\":false,\"enableLeague\":false,\"enableSmartLayout\":false}],["+strconv.Itoa(count)+",")
+			} else {
+				v = strings.TrimPrefix(v, ",[]],["+strconv.Itoa(count)+",")
+			}
 
 			count++
 
