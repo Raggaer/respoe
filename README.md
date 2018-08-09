@@ -74,7 +74,7 @@ All methods are testable. To run the tests you need to set some environment vari
 ## Example of usage
 
 Currently I developed this library mainly to parse [Path Of Exile forums](https://www.pathofexile.com/forum) to be able to create
-a [mobile-friendly forum](https://respoe.xyz)
+a [mobile-friendly forum](https://respoe.xyz). With the trading package I created [Currency status](https://respoe.xyz/currency/chaos) to view currency prices compared to chaos
 
 ## License
 
