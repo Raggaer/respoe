@@ -6,6 +6,7 @@ It makes requests and then parses the response to fetch all the needed data. The
 
 - Client: Related to all account features.
 - Forum: Related to all forum data.
+- Trade: Related to trading websites
 - Util: Related to util methods for developing tools.
 
 ## Usage
