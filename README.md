@@ -34,6 +34,7 @@ Below is a list of the features that are already completed:
 - [x] Retrieve account profile
 - [x] Retrieve account character list
 - [x] Retrieve account character items
+- [x] Retrieve active leagues
 
 ### Forum
 
