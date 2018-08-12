@@ -1,3 +1,5 @@
 run-test.ps1
 test.txt
 .idea
+*~
+*.swp
