@@ -113,7 +113,7 @@ func (t *Thread) GetPostList(page int, c *client.Client) (*PostList, error) {
 	}
 
 	// Retrieve forum name
-	forumName := strings.TrimSuffix(strings.TrimPrefix(doc.Find(".topBar.first .breadcrumb").Text(), "Forum Index»"), "»View Thread")
+	forumName := strings.TrimSuffix(strings.TrimPrefix(doc.Find(".topBar.first .breadcrumb").Text(), "Forum IndexÃÂÃÂÃÂÃÂ»"), "ÃÂÃÂÃÂÃÂ»View Thread")
 
 	// Retrieve thread name
 	threadName := doc.Find(".topBar.last.layoutBoxTitle").Text()
@@ -156,7 +156,7 @@ func (t *Thread) GetPostList(page int, c *client.Client) (*PostList, error) {
 			p.Author = s.Next().Children().First().Children().First().ChildrenFiltered(".post_by_account").Text()
 
 			postCreatedAt, err := time.Parse(
-				"Jan 2, 2006 15:04:05 PM",
+				util.DateFormat,
 				s.Next().Children().First().Children().First().ChildrenFiltered(".post_date").Text(),
 			)
 
@@ -209,7 +209,7 @@ func (t *Thread) GetPostList(page int, c *client.Client) (*PostList, error) {
 
 		// Retrieve post creation date
 		postCreatedAt, err := time.Parse(
-			"Jan 2, 2006 15:04:05 PM",
+			util.DateFormat,
 			s.Children().Last().Children().First().Children().NextFiltered("div.posted-by").Children().NextFiltered("span.post_date").Text(),
 		)
 		if err != nil {

@@ -8,6 +8,7 @@ import (
 
 	"github.com/PuerkitoBio/goquery"
 	"github.com/raggaer/respoe/client"
+	"github.com/raggaer/respoe/util"
 )
 
 const forumIndexURL = "https://www.pathofexile.com/forum"
@@ -70,7 +71,7 @@ func GetForumList(c *client.Client) ([]*Forum, error) {
 		}
 
 		postDate, err := time.Parse(
-			"Jan 2, 2006 15:04:05 PM",
+			util.DateFormat,
 			lastPost.Children().NextFiltered("div.post_date").Text(),
 		)
 		if err != nil {

@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/PuerkitoBio/goquery"
+	"github.com/raggaer/respoe/util"
 )
 
 const inboxURL = "https://www.pathofexile.com/private-messages/inbox"
@@ -65,7 +66,7 @@ func (c *Client) GetInbox(page int) ([]*PrivateMessage, error) {
 		d.Sender = s.Children().NextFiltered(".message-details").Children().NextFiltered(".profile-link").Text()
 
 		// Retrieve message date
-		messageDate, err := time.Parse("Jan 2, 2006 15:04:05 PM", s.Children().NextFiltered(".message-details").Children().Last().Text())
+		messageDate, err := time.Parse(util.DateFormat, s.Children().NextFiltered(".message-details").Children().Last().Text())
 		if err != nil {
 			parsingError = fmt.Errorf(
 				"Unable to retrieve message date: %s",

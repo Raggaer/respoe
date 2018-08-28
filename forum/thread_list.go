@@ -30,7 +30,7 @@ func (f *Forum) GetThreadList(page int, c *client.Client) (*ThreadList, error) {
 	var parsingError error
 
 	// Retrieve forum name
-	forumName := strings.TrimPrefix(doc.Find(".topBar.first .breadcrumb").Text(), "Forum Index»")
+	forumName := strings.TrimPrefix(doc.Find(".topBar.first .breadcrumb").Text(), "Forum IndexÃÂ»")
 
 	threadList := []*Thread{}
 
@@ -128,7 +128,7 @@ func (f *Forum) GetThreadList(page int, c *client.Client) (*ThreadList, error) {
 		threadDate := postBy.Children().Last().Text()
 		threadDate = strings.TrimSpace(strings.TrimPrefix(threadDate, ", "))
 
-		creationDate, err := time.Parse("Jan 2, 2006 15:04:05 PM", threadDate)
+		creationDate, err := time.Parse(util.DateFormat, threadDate)
 		if err != nil {
 			parsingError = fmt.Errorf(
 				"Unable to parse thread creation date: %s",
