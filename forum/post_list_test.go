@@ -38,7 +38,7 @@ func TestGetPostList(t *testing.T) {
 	}
 
 	// Check forum name
-	if posts.ForumName == "Bug Reports" {
+	if posts.ForumName != "Bug Reports" {
 		t.Fatalf("Wrong forum name. Expected 'Bug Reports' got %s", posts.ForumName)
 	}
 }

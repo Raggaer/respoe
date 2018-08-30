@@ -124,7 +124,7 @@ func (t *Thread) GetPostList(page int, c *client.Client) (*PostList, error) {
 			return
 		}
 		if strings.Contains(v, "view-forum") {
-			forumName = v
+			forumName = s.Text()
 		}
 	})
 
