@@ -113,7 +113,20 @@ func (t *Thread) GetPostList(page int, c *client.Client) (*PostList, error) {
 	}
 
 	// Retrieve forum name
-	forumName := strings.TrimSuffix(strings.TrimPrefix(doc.Find(".topBar.first .breadcrumb").Text(), "Forum IndexÃÂÃÂÃÂÃÂ»"), "ÃÂÃÂÃÂÃÂ»View Thread")
+	forumName := ""
+	forumNamehrefs := doc.Find(".topBar.first .breadcrumb")
+	forumNamehrefs.Children().Each(func(i int, s *goquery.Selection) {
+		if forumName != "" {
+			return
+		}
+		v, ok := s.Attr("href")
+		if !ok {
+			return
+		}
+		if strings.Contains(v, "view-forum") {
+			forumName = v
+		}
+	})
 
 	// Retrieve thread name
 	threadName := doc.Find(".topBar.last.layoutBoxTitle").Text()

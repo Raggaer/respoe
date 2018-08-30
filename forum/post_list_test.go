@@ -36,6 +36,11 @@ func TestGetPostList(t *testing.T) {
 	if len(posts.List[2].Badges) <= 0 {
 		t.Fatalf("Wrong third post badges amount got %d", len(posts.List[2].Badges))
 	}
+
+	// Check forum name
+	if posts.ForumName == "Bug Reports" {
+		t.Fatalf("Wrong forum name. Expected 'Bug Reports' got %s", posts.ForumName)
+	}
 }
 
 func TestGetPostListWithItems(t *testing.T) {

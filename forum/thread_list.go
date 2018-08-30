@@ -30,7 +30,11 @@ func (f *Forum) GetThreadList(page int, c *client.Client) (*ThreadList, error) {
 	var parsingError error
 
 	// Retrieve forum name
-	forumName := strings.TrimPrefix(doc.Find(".topBar.first .breadcrumb").Text(), "Forum IndexÃÂ»")
+	forumNamehrefs := doc.Find(".topBar.first .breadcrumb")
+	forumName := forumNamehrefs.Text()
+	forumNamehrefs.Children().Each(func(i int, s *goquery.Selection) {
+		forumName = strings.Replace(forumName, s.Text(), "", 1)
+	})
 
 	threadList := []*Thread{}
 

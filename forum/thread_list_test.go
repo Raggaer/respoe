@@ -44,4 +44,9 @@ func TestGetThreadList(t *testing.T) {
 	if threads.List[0].Pagination.Last < 96 {
 		t.Fatalf("Wrong last page for pagination. Expected > 96 got %d", threads.List[0].Pagination.Last)
 	}
+
+	// Check for forum name
+	if threads.ForumName != "Bug Reports" {
+		t.Fatalf("Wrong forum name. Expected 'Bug Reports' got %s", threads.ForumName)
+	}
 }
