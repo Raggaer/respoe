@@ -86,7 +86,7 @@ func GetForumList(c *client.Client) ([]*Forum, error) {
 
 		lastPostAchiv, ok := postAchievement.Children().First().Children().First().Attr("src")
 		if !ok {
-			return
+			lastPostAchiv = ""
 		}
 
 		f := &Forum{
