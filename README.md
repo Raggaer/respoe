@@ -53,6 +53,12 @@ Below is a list of the features that are already completed:
 
 - [x] Retrieve currency exchange offers
 
+### Ladder
+
+[![GoDoc](https://godoc.org/github.com/Raggaer/respoe/ladder?status.svg)](http://godoc.org/github.com/Raggaer/respoe/ladder)
+
+- [x] Retrieve entries from a league ladder
+
 ### Util
 
 [![GoDoc](https://godoc.org/github.com/Raggaer/respoe/util?status.svg)](http://godoc.org/github.com/Raggaer/respoe/util)
