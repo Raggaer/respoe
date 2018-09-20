@@ -57,7 +57,7 @@ type EntryCharacter struct {
 	Class      string
 }
 
-// RetrieveLadder
+// RetrieveLadder retrieves a list of ladder entries for the given league
 func RetrieveLadder(league string, offset, limit int, c *client.Client) (*Ranking, error) {
 	resp, err := c.HTTP.Get(fmt.Sprintf(
 		ladderURL,
