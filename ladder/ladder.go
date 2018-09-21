@@ -56,6 +56,7 @@ type EntryCharacter struct {
 	Level      int
 	Experience int64
 	Class      string
+	ID         string `json:"id"`
 }
 
 // RetrieveLadder retrieves a list of ladder entries for the given league
