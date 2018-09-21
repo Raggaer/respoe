@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
+	"net/url"
 
 	"github.com/raggaer/respoe/client"
 )
@@ -65,7 +66,7 @@ func RetrieveLadder(league string, offset, limit int, c *client.Client) (*Rankin
 		ladderURL,
 		offset,
 		limit,
-		league,
+		url.QueryEscape(league),
 	))
 	if err != nil {
 		return nil, err
