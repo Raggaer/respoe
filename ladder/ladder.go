@@ -2,6 +2,7 @@ package ladder
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 
@@ -77,5 +78,11 @@ func RetrieveLadder(league string, offset, limit int, c *client.Client) (*Rankin
 	if err := json.Unmarshal(respBody, &r); err != nil {
 		return nil, err
 	}
+
+	// Check for error message
+	if r.Error.Message != "" {
+		return nil, errors.New(r.Error.Message)
+	}
+
 	return &r, nil
 }
