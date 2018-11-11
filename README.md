@@ -13,9 +13,13 @@ It makes requests and then parses the response to fetch all the needed data. The
 
 First get the package:
 
-`go get github.com/raggaer/respoe/...`
+```go
+go get github.com/raggaer/respoe/...
+```
 
-You can then use this as a library for developing tools related to the Path of Exile website, forum or the trade site. You can automate the reading of forums, creating or replying threads or even automating private messaging (just like poe.trade bot does)
+You can then use this as a library for developing tools related to the Path of Exile website and APIs, forum or the trade site.
+You can automate the reading of forums, creating or replying threads or even automating private messaging (just like poe.trade bot does),
+gather currency prices or gather ladder information.
 
 ## Features
 
