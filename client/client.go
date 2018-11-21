@@ -25,7 +25,23 @@ func New() (*Client, error) {
 	return &Client{
 		HTTP: &http.Client{
 			Jar:     jar,
-			Timeout: time.Duration(time.Second * 5),
+			Timeout: time.Duration(time.Second * 2),
+		},
+		Logged: false,
+	}, nil
+}
+
+// NewTimeout returns a new client with the given timeout
+func NewTimeout(timeout time.Duration) (*Client, error) {
+	jar, err := cookiejar.New(&cookiejar.Options{PublicSuffixList: publicsuffix.List})
+	if err != nil {
+		return nil, err
+	}
+
+	return &Client{
+		HTTP: &http.Client{
+			Jar:     jar,
+			Timeout: timeout,
 		},
 		Logged: false,
 	}, nil
