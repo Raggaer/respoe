@@ -26,6 +26,10 @@ func (f *Forum) GetThreadList(page int, c *client.Client) (*ThreadList, error) {
 		return nil, err
 	}
 
+	if util.IsMaintenance(doc) {
+		return nil, errors.New("Forum is under maintenance")
+	}
+
 	// Parsing error
 	var parsingError error
 

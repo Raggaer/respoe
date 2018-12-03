@@ -1,6 +1,7 @@
 package forum
 
 import (
+	"errors"
 	"fmt"
 	"strconv"
 	"strings"
@@ -31,6 +32,10 @@ func GetForumList(c *client.Client) ([]*Forum, error) {
 	var parsingError error
 
 	forumList := []*Forum{}
+
+	if util.IsMaintenance(doc) {
+		return nil, errors.New("Forum is under maintenance")
+	}
 
 	doc.Find("div.forum_name").Each(func(i int, s *goquery.Selection) {
 		// Retrieve <a></a> node

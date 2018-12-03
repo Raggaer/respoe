@@ -1,6 +1,7 @@
 package forum
 
 import (
+	"errors"
 	"fmt"
 	"strconv"
 	"strings"
@@ -23,6 +24,10 @@ func (t *Thread) GetPostList(page int, c *client.Client) (*PostList, error) {
 	doc, err := goquery.NewDocumentFromReader(resp.Body)
 	if err != nil {
 		return nil, err
+	}
+
+	if util.IsMaintenance(doc) {
+		return nil, errors.New("Forum is under maintenance")
 	}
 
 	postList := []*Post{}
