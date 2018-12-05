@@ -158,7 +158,7 @@ func (t *Thread) GetPostList(page int, c *client.Client) (*PostList, error) {
 
 		// Special post from admin
 		if s.HasClass("newsPost") {
-			postContent, err := s.Children().First().Children().First().Children().Last().Children().First().Children().First().Html()
+			postContent, err := s.Children().First().Children().First().Html()
 			if err != nil {
 				parsingError = fmt.Errorf(
 					"Unable to retrieve post content HTML: %s",

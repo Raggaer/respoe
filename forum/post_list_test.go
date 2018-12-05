@@ -41,6 +41,18 @@ func TestGetPostList(t *testing.T) {
 	if posts.ForumName != "Bug Reports" {
 		t.Fatalf("Wrong forum name. Expected 'Bug Reports' got %s", posts.ForumName)
 	}
+
+	// Test admin post
+	adminPost := Thread{
+		URL: "/view-thread/2255460",
+	}
+	adminThreadPosts, err := adminPost.GetPostList(1, c)
+	if err != nil {
+		t.Fatalf("Unable to retrieve post list: %v", err)
+	}
+	if len(adminThreadPosts.List[0].Content) < 50000 {
+		t.Fatalf("Invalid admin thread post content. Expected a length of '%d' got '%d'", 50000, len(adminThreadPosts.List[0].Content))
+	}
 }
 
 func TestGetPostListWithItems(t *testing.T) {
