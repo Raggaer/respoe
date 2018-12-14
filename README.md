@@ -29,15 +29,15 @@ Below is a list of the features that are already completed:
 
 [![GoDoc](https://godoc.org/github.com/Raggaer/respoe/client?status.svg)](http://godoc.org/github.com/Raggaer/respoe/client)
 
-- [x] Login
-- [x] Logout
-- [x] Change password
-- [x] Retrieve inbox by page
-- [x] Send private messages
-- [x] Retrieve special offer list
-- [x] Retrieve account profile
-- [x] Retrieve account character list
-- [x] Retrieve account character items
+- [ ] Login (with the addition of cloudflare to the login page, this method is broken)
+- [ ] Logout (with the addition of cloudflare to the login page, this method is broken)
+- [ ] Change password (with the addition of cloudflare to the login page, this method is broken)
+- [ ] Retrieve inbox by page (with the addition of cloudflare to the login page, this method is broken)
+- [ ] Send private messages (with the addition of cloudflare to the login page, this method is broken)
+- [x] Retrieve special offer list 
+- [ ] Retrieve account profile (with the addition of cloudflare to the login page, this method is broken)
+- [ ] Retrieve account character list (with the addition of cloudflare to the login page, this method is broken)
+- [ ] Retrieve account character items (with the addition of cloudflare to the login page, this method is broken)
 - [x] Retrieve active leagues
 
 ### Forum
@@ -49,7 +49,7 @@ Below is a list of the features that are already completed:
 - [x] Retrieve all threads from a forum (with status, views, author, creation date and replies)
 - [x] Retrieve all posts from a thread (content, author, creation date, items)
 - [x] Work with forum items (sockets)
-- [x] Reply to a thread
+- [ ] Reply to a thread (with the addition of cloudflare to the login page, this method is broken)
 
 ### Trade
 
