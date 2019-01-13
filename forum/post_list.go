@@ -168,7 +168,7 @@ func (t *Thread) GetPostList(page int, c *client.Client) (*PostList, error) {
 			}
 
 			p.Content = postContent
-			p.ContentText = s.Children().First().Children().First().Html()
+			p.ContentText = s.Children().First().Children().First().Text()
 			postList = append(postList, p)
 
 			// Retrieve post info part

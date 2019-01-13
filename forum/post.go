@@ -22,6 +22,7 @@ type Post struct {
 	Staff        bool
 	ValuedPoster bool
 	Content      string
+	ContentText  string
 	Author       string
 	Badges       []*client.Badge
 	Avatar       string
