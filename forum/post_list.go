@@ -205,6 +205,7 @@ func (t *Thread) GetPostList(page int, c *client.Client) (*PostList, error) {
 		}
 
 		p.Content = postContent
+		p.ContentText = s.Children().First().Children().NextFiltered("div.content").Text()
 
 		// Retrieve post avatar
 		avatarURL, avatarFound := s.Children().Last().Children().First().Children().NextFiltered("div.avatar").Children().First().Attr("src")
