@@ -41,10 +41,16 @@ type ExchangeEndpoints struct {
 
 // ExchangeResponse struct used for exchange request responses
 type ExchangeResponse struct {
-	Error  string   `json:"error"`
-	Result []string `json:"result"`
-	Id     string   `json:"id"`
-	Total  int      `json:"total"`
+	Error  ExchangeError `json:"error"`
+	Result []string      `json:"result"`
+	Id     string        `json:"id"`
+	Total  int           `json:"total"`
+}
+
+// ExchangeError struct used to render API errors
+type ExchangeError struct {
+	Message string
+	Code    int
 }
 
 // ExchangeOffersResponse struct used for exchange offers
@@ -127,8 +133,8 @@ func RetrieveExchange(league string, have, want []string, online bool, c *client
 	}
 
 	// Check for errors
-	if exchangeResponse.Error != "" {
-		return nil, errors.New(exchangeResponse.Error)
+	if exchangeResponse.Error.Message != "" {
+		return nil, errors.New(exchangeResponse.Error.Message)
 	}
 
 	// Retrieve deals response
