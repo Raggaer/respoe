@@ -3,6 +3,7 @@ package trade
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -40,6 +41,7 @@ type ExchangeEndpoints struct {
 
 // ExchangeResponse struct used for exchange request responses
 type ExchangeResponse struct {
+	Error  string   `json:"error"`
 	Result []string `json:"result"`
 	Id     string   `json:"id"`
 	Total  int      `json:"total"`
@@ -122,6 +124,11 @@ func RetrieveExchange(league string, have, want []string, online bool, c *client
 	exchangeResponse := ExchangeResponse{}
 	if err := json.Unmarshal(respContent, &exchangeResponse); err != nil {
 		return nil, err
+	}
+
+	// Check for errors
+	if exchangeResponse.Error != "" {
+		return nil, errors.New(exchangeResponse.Error)
 	}
 
 	// Retrieve deals response
