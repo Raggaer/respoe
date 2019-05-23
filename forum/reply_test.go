@@ -8,6 +8,7 @@ import (
 )
 
 func TestReply(t *testing.T) {
+	t.SkipNow()
 	c, err := client.New()
 	if err != nil {
 		t.Fatalf("Unable to create http client: %v", err)

@@ -9,6 +9,9 @@ It makes requests and then parses the response to fetch all the needed data. The
 - Trade: Related to trading websites
 - Util: Related to util methods for developing tools.
 
+**Since the implementation of CloudFlare and Google Captcha services, a lot of features stopped working.
+I wont remove the code but all tests regarding these activities are skipped now.**
+
 ## Usage
 
 First get the package:
@@ -18,8 +21,7 @@ go get github.com/raggaer/respoe/...
 ```
 
 You can then use this as a library for developing tools related to the Path of Exile website and APIs, forum or the trade site.
-You can automate the reading of forums, creating or replying threads or even automating private messaging (just like poe.trade bot does),
-gather currency prices or gather ladder information.
+You can automate the reading of forums, gather currency prices or gather ladder information.
 
 ## Features
 
@@ -29,15 +31,7 @@ Below is a list of the features that are already completed:
 
 [![GoDoc](https://godoc.org/github.com/Raggaer/respoe/client?status.svg)](http://godoc.org/github.com/Raggaer/respoe/client)
 
-- [ ] Login (with the addition of cloudflare to the login page, this method is broken)
-- [ ] Logout (with the addition of cloudflare to the login page, this method is broken)
-- [ ] Change password (with the addition of cloudflare to the login page, this method is broken)
-- [ ] Retrieve inbox by page (with the addition of cloudflare to the login page, this method is broken)
-- [ ] Send private messages (with the addition of cloudflare to the login page, this method is broken)
 - [x] Retrieve special offer list 
-- [ ] Retrieve account profile (with the addition of cloudflare to the login page, this method is broken)
-- [ ] Retrieve account character list (with the addition of cloudflare to the login page, this method is broken)
-- [ ] Retrieve account character items (with the addition of cloudflare to the login page, this method is broken)
 - [x] Retrieve active leagues
 
 ### Forum
@@ -49,7 +43,6 @@ Below is a list of the features that are already completed:
 - [x] Retrieve all threads from a forum (with status, views, author, creation date and replies)
 - [x] Retrieve all posts from a thread (content, author, creation date, items)
 - [x] Work with forum items (sockets)
-- [ ] Reply to a thread (with the addition of cloudflare to the login page, this method is broken)
 
 ### Trade
 
@@ -72,6 +65,8 @@ Below is a list of the features that are already completed:
 - [x] Retrieve hash value from any reply thread form
 - [x] Retrieve errors from a submitted form
 
+**Almost all these methods no longer work with the addition of CloudFlare and Google Captcha services...**
+
 ## Testing
 
 All methods are testable. To run the tests you need to set some environment variables:
@@ -86,7 +81,7 @@ All methods are testable. To run the tests you need to set some environment vari
 ## Example of usage
 
 Currently I developed this library mainly to parse [Path Of Exile forums](https://www.pathofexile.com/forum) to be able to create
-a [mobile-friendly forum](https://respoe.xyz). With the trading package I created [Currency status](https://respoe.xyz/currency/chaos) to view currency prices compared to chaos
+a [mobile-friendly forum](https://respoe.xyz), and a [very cool Android application](https://play.google.com/store/apps/details?id=xyz.forum.respoe). With the trading package I created [Currency status](https://respoe.xyz/currency/chaos) to view currency prices compared to chaos
 
 ## License
 
