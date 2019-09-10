@@ -79,6 +79,10 @@ func (t *Thread) GetPostList(page int, c *client.Client) (*PostList, error) {
 				nextExit = true
 			}
 
+			if strings.HasSuffix(s[0], ",") {
+				s[0] = strings.TrimSuffix(s[0], ",")
+			}
+
 			// Parse current item
 			item, err := client.ParseItem([]byte(s[0]))
 			if err != nil {
