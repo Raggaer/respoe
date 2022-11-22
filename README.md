@@ -21,7 +21,7 @@ go get github.com/raggaer/respoe/...
 ```
 
 You can then use this as a library for developing tools related to the Path of Exile website and APIs, forum or the trade site.
-You can automate the reading of forums, gather [currency](https://www.playerauctions.com/path-of-exile-items/currency/) prices or gather ladder information.
+You can automate the reading of forums, gather <a rel="link" href="https://www.playerauctions.com/path-of-exile-items/currency/">currency</a> prices or gather ladder information.
 
 ## Features
 
